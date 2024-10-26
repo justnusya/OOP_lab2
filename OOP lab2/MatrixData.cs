@@ -109,7 +109,7 @@ namespace OOP_lab2
         public MyMatrix(string line)
         {
             bool isRectangle = true;
-            string[] separators = new string[] { "\n", "\r", "\r\n" };
+            string[] separators = new string[] { "\n", "\r\n" };
             string[] lines = line.Split(separators, StringSplitOptions.RemoveEmptyEntries);
 
             for (int i = 1; i < lines.Length; i++)
@@ -178,6 +178,26 @@ namespace OOP_lab2
                 throw new IndexOutOfRangeException("Непримустимий індекс");
             matrixElements[index1, index2] = value;
         }
-        
+        override public String ToString()
+        {
+            string data = "";
+            for (int i = 0; i < matrixElements.GetLength(0); i++)
+            { 
+                string tempString = "";
+                for (int j = 0; j < matrixElements.GetLength(1); j++)
+                {
+                    if (j == 0)
+                    {
+                        tempString = matrixElements[i, j].ToString();
+                    }
+                    else
+                    {
+                        tempString = tempString + "\t" + matrixElements[i, j];
+                    }
+                }
+                data = data + tempString + "\n";
+            }
+            return data;
+        }
     }
 }
