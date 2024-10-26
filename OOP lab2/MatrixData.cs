@@ -11,14 +11,30 @@ namespace OOP_lab2
         private double[,] matrixElements;
         public MyMatrix(MyMatrix copy)
         {
-            matrixElements = copy.matrixElements;
+            //конструктор копіювання
+            for (int i = 0; i < copy.matrixElements.GetLength(0); i++)
+            {
+                for (int j = 0; j < copy.matrixElements.GetLength(1); j++)
+                {
+                    matrixElements[i, j] = copy.matrixElements[i, j];
+                }
+            }
         }
-        public MyMatrix(double[,]elements)
+        public MyMatrix(double[,] elements)
         {
-            matrixElements = elements;
+            //в разі прямокутного масиву
+            matrixElements = new double[elements.GetLength(0), elements.GetLength(1)];
+            for (int i = 0; i < elements.GetLength(0); i++)
+            {
+                for (int j = 0; j < elements.GetLength(1); j++)
+                {
+                    matrixElements[i, j] = elements[i, j];
+                }
+            }
         }
-        public MyMatrix(double[][]elements)
+        public MyMatrix(double[][] elements)
         {
+            //в разі зубчастого масиву
             bool isRectangle = true;
             for (int i = 1; i < elements.Length; i++)
             {
@@ -29,13 +45,90 @@ namespace OOP_lab2
                 }
             }
 
-            if (isRectangle==true)
+            if (isRectangle == true)
             {
-                for(int i =0; i < elements.Length; i++)
+                for (int i = 0; i < elements.Length; i++)
                 {
-                    for(int j=0; j < elements[0].Length; j++)
+                    for (int j = 0; j < elements[0].Length; j++)
                     {
                         matrixElements[i, j] = elements[i][j];
+                    }
+                }
+            }
+        }
+        public MyMatrix(string[] lines)
+        {
+            //в разі масиву рядків
+            bool isRectangle = true;
+            //перевірка на однакову к-ть чисел в рядках (не довжину всіх елементів рядку, а саме чисел)
+            int count = 0, temp = 0;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                count = 0;
+                string[] parts = lines[i].Split(' ');
+
+                for (int j = 0; j < parts.Length; j++) //к-ть елементів у рядку
+                {
+                    if (double.TryParse(parts[j], out double value))
+                    {
+                        count++;
+                    }
+                }
+                if (i == 0)
+                {
+                    temp = count;
+                }
+                else if (count != temp)
+                {
+                    isRectangle = false;
+                    throw new ArgumentException("Кількість чисел в кожному рядку повинна бути однаковою.");
+                }
+            }
+
+            if (isRectangle == true)
+            {
+                matrixElements = new double[lines.Length, count];
+                for (int i = 0; i < lines.Length; i++)
+                {
+                    string[] parts = lines[i].Split(' ');
+
+                    for (int j = 0; j < parts.Length; j++)
+                    {
+                        if (int.TryParse(parts[j], out int intValue))
+                        {
+                            matrixElements[i, j] = (double)intValue;
+                        }
+                        else if (double.TryParse(parts[j], out double doubleValue))
+                        {
+                            matrixElements[i, j] = doubleValue;
+                        }
+                    }
+                }
+            }
+        }
+        public MyMatrix(string line)
+        {
+            bool isRectangle = true;
+            string[] separators = new string[] { "\n", "\r", "\r\n" };
+            string[] lines = line.Split(separators, StringSplitOptions.RemoveEmptyEntries);
+
+            for(int i =1; i < lines.Length; i++)
+            {
+                if (lines[i].Split().Length != lines[0].Split().Length)
+                {
+                    isRectangle = false;
+                    throw new ArgumentException("Кількість чисел в кожному рядку повинна бути однаковою.");
+                }
+            }
+            if (isRectangle == true)
+            {
+                matrixElements = new double[lines.Length,lines[0].Split().Length];
+                for(int i=0; i<lines.Length; i++)
+                {
+                    string[] oneLineElements = lines[i].Split();
+                    for(int j=0; j< lines[0].Split().Length; j++)
+                    {
+                        matrixElements[i, j] = double.Parse(oneLineElements[j]);
                     }
                 }
             }
