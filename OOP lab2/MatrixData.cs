@@ -12,6 +12,8 @@ namespace OOP_lab2
         public MyMatrix(MyMatrix copy)
         {
             //конструктор копіювання
+            matrixElements = new double[copy.matrixElements.GetLength(0), copy.matrixElements.GetLength(1)];
+
             for (int i = 0; i < copy.matrixElements.GetLength(0); i++)
             {
                 for (int j = 0; j < copy.matrixElements.GetLength(1); j++)
@@ -47,6 +49,7 @@ namespace OOP_lab2
 
             if (isRectangle == true)
             {
+                matrixElements = new double[elements.Length, elements[0].Length];
                 for (int i = 0; i < elements.Length; i++)
                 {
                     for (int j = 0; j < elements[0].Length; j++)
@@ -114,7 +117,7 @@ namespace OOP_lab2
 
             for (int i = 1; i < lines.Length; i++)
             {
-                if (lines[i].Split().Length != lines[0].Split().Length)
+                if (lines[i].Trim().Split().Length != lines[0].Trim().Split().Length)
                 {
                     isRectangle = false;
                     throw new ArgumentException("Кількість чисел в кожному рядку повинна бути однаковою.");
@@ -122,11 +125,11 @@ namespace OOP_lab2
             }
             if (isRectangle == true)
             {
-                matrixElements = new double[lines.Length, lines[0].Split().Length];
+                matrixElements = new double[lines.Length, lines[0].Split().Length-1]; //The last column appears to contain zeros without Length-1
                 for (int i = 0; i < lines.Length; i++)
                 {
-                    string[] oneLineElements = lines[i].Split();
-                    for (int j = 0; j < lines[0].Split().Length; j++)
+                    string[] oneLineElements = lines[i].Trim().Split();
+                    for (int j = 0; j < oneLineElements.Length; j++)
                     {
                         matrixElements[i, j] = double.Parse(oneLineElements[j]);
                     }

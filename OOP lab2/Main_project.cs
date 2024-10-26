@@ -10,6 +10,34 @@ namespace OOP_lab2
     {
         static void Main(string[] args)
         {
+            //testing
+            double[][] initialValues = new double[2][];
+            initialValues[0] = new double[] { 1.1, 2.3, 3.1 };
+            initialValues[1] = new double[] { 4.0, 5.0, 6.0 };
+            MyMatrix matrix1 = new MyMatrix(initialValues);
+            Console.WriteLine(matrix1);
+            Console.WriteLine(matrix1.Height);
+            
+            string test = "1 2 3 \n 1 2 3\n 1 2 3";
+            MyMatrix matrix2 = new MyMatrix(test);
+            Console.WriteLine(matrix2);
+            Console.WriteLine(matrix2.Height);
+
+            MyMatrix matrix3 = new MyMatrix(matrix1);
+            Console.WriteLine(matrix3);
+            Console.WriteLine(matrix3.GetHeight());
+
+            string[] lines = new string[]
+            {
+                "1 2 3",
+                "4 5 6",
+                "7 8 9"
+            };
+            MyMatrix matrix4 = new MyMatrix(lines);
+            Console.WriteLine(matrix4);
+            Console.WriteLine(matrix4.GetHeight());
+
+            Console.ReadLine();
         }
     }
 }
