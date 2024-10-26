@@ -112,7 +112,7 @@ namespace OOP_lab2
             string[] separators = new string[] { "\n", "\r", "\r\n" };
             string[] lines = line.Split(separators, StringSplitOptions.RemoveEmptyEntries);
 
-            for(int i =1; i < lines.Length; i++)
+            for (int i = 1; i < lines.Length; i++)
             {
                 if (lines[i].Split().Length != lines[0].Split().Length)
                 {
@@ -122,16 +122,62 @@ namespace OOP_lab2
             }
             if (isRectangle == true)
             {
-                matrixElements = new double[lines.Length,lines[0].Split().Length];
-                for(int i=0; i<lines.Length; i++)
+                matrixElements = new double[lines.Length, lines[0].Split().Length];
+                for (int i = 0; i < lines.Length; i++)
                 {
                     string[] oneLineElements = lines[i].Split();
-                    for(int j=0; j< lines[0].Split().Length; j++)
+                    for (int j = 0; j < lines[0].Split().Length; j++)
                     {
                         matrixElements[i, j] = double.Parse(oneLineElements[j]);
                     }
                 }
             }
         }
+        public int Height
+        {
+            get { return matrixElements.GetLength(0); }
+        }
+        public int Width
+        {
+            get { return matrixElements.GetLength(1); }
+        }
+        //Java-style getter & setter below:
+        public int GetHeight()
+        {
+            return matrixElements.GetLength(0);
+        }
+        public int GetWidth()
+        {
+            return matrixElements.GetLength(1);
+        }
+        public double this[int index1, int index2]
+        {
+            get
+            {
+                if (index1 < 0 || index1 >= matrixElements.GetLength(0) || index2 < 0 || index2 >= matrixElements.GetLength(1))
+                    throw new IndexOutOfRangeException("Неприпустимий індекс");
+                return matrixElements[index1, index2];
+            }
+            set
+            {
+                if (index1 < 0 || index1 >= matrixElements.GetLength(0) || index2 < 0 || index2 >= matrixElements.GetLength(1))
+                    throw new IndexOutOfRangeException("Неприпустимий індекс");
+                matrixElements[index1, index2] = value;
+            }
+        }
+        //Java-style getter & setter below:
+        public double getValue(int index1, int index2)
+        {
+            if (index1 < 0 || index1 >= matrixElements.GetLength(0) || index2 < 0 || index2 >= matrixElements.GetLength(1))
+                throw new IndexOutOfRangeException("Неприпустимий індекс");
+            return matrixElements[index1, index2];
+        }
+        public void setValue(int index1, int index2, double value)
+        {
+            if (index2 < 0 || index1 >= matrixElements.GetLength(0) || index2 < 0 || index2 >= matrixElements.GetLength(1))
+                throw new IndexOutOfRangeException("Непримустимий індекс");
+            matrixElements[index1, index2] = value;
+        }
+        
     }
 }
