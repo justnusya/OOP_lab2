@@ -10,8 +10,13 @@ namespace OOP_lab2_task2
     {
         static void Main(string[] args)
         {
-            MyTime time = new MyTime(3,4,5);
+            MyTime time = new MyTime(13,45,55);
             Console.WriteLine(time.Hour);
+            Console.WriteLine(time.ToSecSinceMidnight());
+            MyTime time2 = MyTime.FromSecSinceMidnight(3600);
+            Console.WriteLine(time2);
+            MyTime time3 = time2.AddOneMinute().AddSeconds(3539).AddOneSecond();
+            Console.WriteLine(time3);
             Console.ReadLine();
         }
     }
@@ -53,6 +58,38 @@ namespace OOP_lab2_task2
         public int ToSecSinceMidnight()
         {
             return hour * 3600 + minute * 60 + second;
+        }
+        public static MyTime FromSecSinceMidnight(int seconds)
+        {
+            int secPerDay = 86400;
+            seconds %= secPerDay;
+            if (seconds < 0)
+                seconds += secPerDay;
+
+            int hour = seconds / 3600;
+            int minute = (seconds / 60) % 60;
+            int second = seconds % 60;
+            MyTime time = new MyTime(hour, minute, second);
+            return time;
+        }
+        public MyTime AddSeconds(int seconds)
+        {
+            int totalSeconds = ToSecSinceMidnight() + seconds;
+            return FromSecSinceMidnight(totalSeconds);
+        }
+        public MyTime AddOneSecond()
+        {
+            return AddSeconds(1);
+        }
+
+        public MyTime AddOneMinute()
+        {
+            return AddSeconds(60);
+        }
+
+        public MyTime AddOneHour()
+        {
+            return AddSeconds(3600);
         }
     }
 }
