@@ -10,7 +10,7 @@ namespace OOP_lab2_task2
     {
         static void Main(string[] args)
         {
-            MyTime time = new MyTime(13,45,55);
+            MyTime time = new MyTime(23, 59, 59);
             Console.WriteLine(time.Hour);
             Console.WriteLine(time.ToSecSinceMidnight());
             MyTime time2 = MyTime.FromSecSinceMidnight(3600);
@@ -18,7 +18,8 @@ namespace OOP_lab2_task2
             MyTime time3 = time2.AddOneMinute().AddSeconds(3539).AddOneSecond();
             Console.WriteLine(time3);
 
-
+            Console.WriteLine(MyTime.WhatLesson(time));
+            
             Console.ReadLine();
         }
     }
@@ -111,6 +112,51 @@ namespace OOP_lab2_task2
             {
                 return timeSec >= startSec || timeSec <= finishSec;
             }
+        }
+        public static string WhatLesson(MyTime currentTime)
+        {
+            MyTime[] lessonStartTimes = {
+            new MyTime(8, 0, 0), //1
+            new MyTime(9, 40, 0), //2
+            new MyTime(11, 20, 0), //3
+            new MyTime(13, 0, 0), //4
+            new MyTime(14, 40, 0), //5
+            new MyTime(16, 20, 0) //6
+        };
+
+            MyTime[] lessonEndTimes = {
+            new MyTime(9, 20, 0), //1
+            new MyTime(11, 0, 0), //2
+            new MyTime(12, 40, 0), //3
+            new MyTime(14, 20, 0), //4
+            new MyTime(16, 0, 0), //5
+            new MyTime(17, 40, 0) //6
+        };
+
+            if (currentTime.ToSecSinceMidnight() < lessonStartTimes[0].ToSecSinceMidnight())
+            {
+                return "пари ще не почалися";
+            }
+
+            if (currentTime.ToSecSinceMidnight() > lessonEndTimes[5].ToSecSinceMidnight())
+            {
+                return "пари вже скінчилися";
+            }
+
+            for (int i = 0; i < lessonStartTimes.Length; i++)
+            {
+                if (IsInRange(lessonStartTimes[i], lessonEndTimes[i], currentTime))
+                {
+                    return $"{i + 1}-а пара";
+                }
+
+                int nextIndex = (i + 1) % lessonEndTimes.Length;
+                if (IsInRange(lessonEndTimes[i], lessonStartTimes[nextIndex], currentTime))
+                {
+                    return $"перерва між {i + 1}-ю та {nextIndex + 1}-ю парами";
+                }
+            }
+            return null;
         }
     }
 }
