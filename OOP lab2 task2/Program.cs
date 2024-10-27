@@ -17,6 +17,8 @@ namespace OOP_lab2_task2
             Console.WriteLine(time2);
             MyTime time3 = time2.AddOneMinute().AddSeconds(3539).AddOneSecond();
             Console.WriteLine(time3);
+
+
             Console.ReadLine();
         }
     }
@@ -90,6 +92,25 @@ namespace OOP_lab2_task2
         public MyTime AddOneHour()
         {
             return AddSeconds(3600);
+        }
+        public static int Difference(MyTime time1, MyTime time2)
+        {
+            return time1.ToSecSinceMidnight() - time2.ToSecSinceMidnight();
+        }
+        public static bool IsInRange(MyTime start, MyTime finish, MyTime time)
+        {
+            int startSec = start.ToSecSinceMidnight();
+            int finishSec = finish.ToSecSinceMidnight();
+            int timeSec = time.ToSecSinceMidnight();
+
+            if (startSec < finishSec)
+            {
+                return timeSec >= startSec && timeSec <= finishSec;
+            }
+            else
+            {
+                return timeSec >= startSec || timeSec <= finishSec;
+            }
         }
     }
 }
