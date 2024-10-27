@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Globalization;
 
 namespace OOP_lab2
 {
     public partial class MyMatrix
     {
-        private double[,] matrixElements;
+        protected double[,] matrixElements;
         public MyMatrix(MyMatrix copy)
         {
             //конструктор копіювання
@@ -94,16 +95,19 @@ namespace OOP_lab2
                 for (int i = 0; i < lines.Length; i++)
                 {
                     string[] parts = lines[i].Split(' ');
+                    int matrixColumn = 0;
 
                     for (int j = 0; j < parts.Length; j++)
                     {
                         if (int.TryParse(parts[j], out int intValue))
                         {
-                            matrixElements[i, j] = (double)intValue;
+                            matrixElements[i, matrixColumn] = (double)intValue;
+                            matrixColumn++;
                         }
                         else if (double.TryParse(parts[j], out double doubleValue))
                         {
-                            matrixElements[i, j] = doubleValue;
+                            matrixElements[i, matrixColumn] = doubleValue;
+                            matrixColumn++;
                         }
                     }
                 }
@@ -202,5 +206,6 @@ namespace OOP_lab2
             }
             return data;
         }
+
     }
 }
