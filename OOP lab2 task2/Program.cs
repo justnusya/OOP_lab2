@@ -10,16 +10,38 @@ namespace OOP_lab2_task2
     {
         static void Main(string[] args)
         {
-            MyTime time = new MyTime(23, 59, 59);
-            Console.WriteLine(time.Hour);
-            Console.WriteLine(time.ToSecSinceMidnight());
-            MyTime time2 = MyTime.FromSecSinceMidnight(3600);
-            Console.WriteLine(time2);
-            MyTime time3 = time2.AddOneMinute().AddSeconds(3539).AddOneSecond();
-            Console.WriteLine(time3);
+            Console.OutputEncoding = Encoding.UTF8;
+            Console.WriteLine("Write the number of hours, minutes and seconds separated by a space");
+            string[] data = Console.ReadLine().Trim().Split();
+            int hour = int.Parse(data[0]);
+            int min = int.Parse(data[1]);
+            int sec = int.Parse(data[2]);
 
-            Console.WriteLine(MyTime.WhatLesson(time));
-            
+            MyTime currentTime = new MyTime(hour, min, sec);
+            Console.WriteLine($"Current Time: {currentTime}");
+
+            Console.WriteLine($"1 sec later: {currentTime.AddOneSecond()}");
+            Console.WriteLine($"1 min later: {currentTime.AddOneMinute()}");
+            Console.WriteLine($"1h later: {currentTime.AddOneHour()}");
+
+            Console.WriteLine("Write a number of seconds to add");
+            int sec2 = int.Parse(Console.ReadLine());
+            Console.WriteLine($"Adding seconds: {currentTime.AddSeconds(sec2)}");
+
+            Console.WriteLine("Another time to compare with: write the number of hours, minutes and seconds separated by a space");
+            string[] data2 = Console.ReadLine().Trim().Split();
+            int hour0 = int.Parse(data2[0]);
+            int min0 = int.Parse(data2[1]);
+            int sec0 = int.Parse(data2[2]);
+            MyTime anotherTime = new MyTime(hour0, min0, sec0);
+
+            Console.WriteLine($"Difference between {currentTime} and {anotherTime}: {MyTime.Difference(currentTime, anotherTime)} seconds");
+
+            MyTime start = new MyTime(23, 59, 59);
+            MyTime finish = new MyTime(1, 1, 1);
+            Console.WriteLine($"Is {currentTime} in range {start} to {finish}? {MyTime.IsInRange(start, finish, currentTime)}");
+
+            Console.WriteLine($"Lesson at {currentTime}: {MyTime.WhatLesson(currentTime)}");
             Console.ReadLine();
         }
     }
@@ -96,7 +118,7 @@ namespace OOP_lab2_task2
         }
         public static int Difference(MyTime time1, MyTime time2)
         {
-            return time1.ToSecSinceMidnight() - time2.ToSecSinceMidnight();
+            return Math.Abs(time1.ToSecSinceMidnight() - time2.ToSecSinceMidnight());
         }
         public static bool IsInRange(MyTime start, MyTime finish, MyTime time)
         {
