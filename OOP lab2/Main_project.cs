@@ -64,6 +64,7 @@ namespace OOP_lab2
             MyMatrix matrix2 = new MyMatrix(lines2);
             Console.WriteLine(matrix1 + matrix2);
             */
+            /*
             string[] lines = new string[]
             {
                 "2 1",
@@ -78,6 +79,19 @@ namespace OOP_lab2
             MyMatrix matrix1 = new MyMatrix(lines);
             MyMatrix matrix2 = new MyMatrix(lines2);
             Console.WriteLine(matrix1 * matrix2);
+            */
+            string[] lines = new string[]
+            {
+                "2 1",
+                "-3 0",
+                "4 -1"
+            };
+            MyMatrix matrix1 = new MyMatrix(lines);
+            Console.WriteLine(matrix1);
+            matrix1.TransponeMe();
+            Console.WriteLine(matrix1);
+            
+            
             Console.ReadLine();
         }
     }

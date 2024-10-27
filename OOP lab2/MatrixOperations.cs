@@ -54,5 +54,28 @@ namespace OOP_lab2
                 throw new ArgumentException("First matrix columns must match second matrix rows");
             }
         }
+        private double[,] GetTransponedArray(MyMatrix matrix)
+        {
+            double[,] matrix0 = new double[matrix.Width, matrix.Height];
+
+            for(int i = 0; i<matrix.Width; i++)
+            {
+                for(int j=0; j < matrix.Height; j++)
+                {
+                    matrix0[i, j] =matrix[j, i];
+                }
+            }
+            return matrix0;
+        }
+        public MyMatrix GetTransponedCopy()
+        {
+            double[,] transposed = GetTransponedArray(this);
+            MyMatrix matrix = new MyMatrix(transposed);
+            return matrix;
+        }
+        public void TransponeMe()
+        {
+            matrixElements = GetTransponedArray(this);
+        }
     }
 }
